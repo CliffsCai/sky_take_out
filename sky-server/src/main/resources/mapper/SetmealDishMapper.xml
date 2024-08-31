@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.SetmealDishMapper">
+
+    <delete id="deleteBySetmealIds">
+        DELETE FROM setmeal_dish
+        WHERE setmeal_id IN
+        <foreach collection="setmealIds" item="setmealId" open="(" close=")" separator=",">
+            #{setmealId}
+        </foreach>
+
+    </delete>
+
+    <insert id="insertSetmealDishes">
+        insert into setmeal_dish(setmeal_id, dish_id, name, price, copies)
+        values
+        <foreach collection="setmealDishes" item="sd" separator=",">
+            (#{sd.setmealId}, #{sd.dishId}, #{sd.name}, #{sd.price}, #{sd.copies})
+        </foreach>
+    </insert>
+
+    <select id="getSetmealByDishIds" resultType="java.lang.Long">
+        SELECT setmeal_id FROM setmeal_dish
+        WHERE id IN
+        <foreach collection="dishIds" item="dishId" open="(" close=")" separator=",">
+            #{dishId}
+        </foreach>
+    </select>
+
+    <select id="getSetmealDishesBySetmealid" resultType="com.sky.entity.SetmealDish">
+        select * from setmeal_dish where setmeal_id = #{setmealId}
+    </select>
+
+    <update id="updateSetmealDish">
+        update setmeal_dish
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="dishId != null">
+                dish_id = #{dishId},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="copies != null">
+                copies = #{copies},
+            </if>
+        </set>
+        <where>
+            setmeal_id = #{setmealId}
+        </where>
+    </update>
+
+
+</mapper>
