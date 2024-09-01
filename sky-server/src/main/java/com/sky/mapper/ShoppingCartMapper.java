@@ -18,6 +18,7 @@ public interface ShoppingCartMapper {
     //返回值为list，sql语句需要声明返回值
     List<ShoppingCart> listShoppingCart(ShoppingCart shoppingCart);
 
+
     void update(ShoppingCart shoppingCart);
 
     void updateNumberById(ShoppingCart shoppingCart);
@@ -26,6 +27,8 @@ public interface ShoppingCartMapper {
 
     @Delete("DELETE from shopping_cart where user_id = #{userId}")
     void cleanByUserId(Long userId);
+
+    void insertBatch(List<ShoppingCart> shoppingCartList);
 }
 
 
