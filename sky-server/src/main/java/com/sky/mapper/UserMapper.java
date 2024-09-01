@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 public interface UserMapper {
 
 
-    @Select("select * from user where id = #{openid}")
+    @Select("select * from user where openid = #{openid}")
     User getByOpenId(String openid);
 
     void insertUser(User user);
