@@ -7,6 +7,9 @@ import com.sky.entity.Orders;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import java.time.LocalDateTime;
 
 @Mapper
 public interface OrderMapper {
@@ -43,5 +46,6 @@ public interface OrderMapper {
 
     void rejectOrder(Orders orders);
 
-
+    @Update("update orders set status = 6 , cancel_reason = '订单超时，自动取消' where pay_status = 0 and status = 1 and order_time < #{localDateTime}")
+    void processTimeoutOrder(LocalDateTime localDateTime);
 }
