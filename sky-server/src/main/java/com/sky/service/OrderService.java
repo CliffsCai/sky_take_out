@@ -43,4 +43,6 @@ public interface OrderService {
     OrderPaymentVO payment(OrdersPaymentDTO ordersPaymentDTO);
 
     void paySuccess(String outTradeNo);
+
+    void reminder(Long id);
 }

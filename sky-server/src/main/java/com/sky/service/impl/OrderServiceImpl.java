@@ -182,6 +182,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public void reminder(Long id) {
+        //通过websocket向浏览器提供推送
+        Orders orders = orderMapper.getById(id);
+        Map map = new HashMap();
+        map.put("type", 2);
+        map.put("orderId", id);
+        map.put("content", "订单号："+orders.getNumber());
+        String jsonString = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(jsonString);
+    }
+
+    @Override
     public PageResult pageQuery(int pageNum, int pageSize, Integer status) {
         Long currentId = BaseContext.getCurrentId();
         OrdersPageQueryDTO ordersPageQueryDTO = new OrdersPageQueryDTO();
