@@ -1,15 +1,12 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.dto.OrdersDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
-import com.sky.vo.DishVO;
-import com.sky.vo.OrderSubmitVO;
-import com.sky.vo.OrderVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface OrderMapper {
@@ -21,11 +18,30 @@ public interface OrderMapper {
 
     Page<Orders> pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
 
-    @Delete("DELETE FROM orders where id = #{id}")
-    void deleteById(Long id);
-
     @Select("select * from orders where id = #{id}")
     Orders getById(Long id);
 
-    void cancelById(Long id);
+    /**
+     * 根据订单号查询订单
+     * @param orderNumber
+     */
+    @Select("select * from orders where number = #{orderNumber}")
+    Orders getByNumber(String orderNumber);
+
+    /**
+     * 修改订单信息
+     * @param orders
+     */
+    void update(Orders orders);
+
+    void cancelById(Orders orders);
+
+    @Select("select count(*) from orders where status = #{status}")
+    Integer getStatusCount(Integer status);
+
+    void updateOrderStatus(OrdersDTO ordersDTO);
+
+    void rejectOrder(Orders orders);
+
+
 }

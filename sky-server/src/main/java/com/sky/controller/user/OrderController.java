@@ -1,13 +1,11 @@
 package com.sky.controller.user;
 
-import com.sky.dto.DishPageQueryDTO;
-import com.sky.dto.OrdersDTO;
-import com.sky.dto.OrdersPageQueryDTO;
-import com.sky.dto.OrdersSubmitDTO;
+import com.sky.dto.*;
 import com.sky.entity.Orders;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.OrderService;
+import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 import io.swagger.annotations.ApiOperation;
@@ -15,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController("userOrderController")
 @Slf4j
 @RequestMapping("/user/order")
 public class OrderController {
@@ -26,9 +24,17 @@ public class OrderController {
     @PostMapping("/submit")
     public Result<OrderSubmitVO> orderSubmit(@RequestBody OrdersSubmitDTO ordersSubmitDTO){
 
-        OrderSubmitVO orderSubmitVO = orderService.order(ordersSubmitDTO);
+        OrderSubmitVO orderSubmitVO = orderService.submitOrder(ordersSubmitDTO);
 
         return Result.success(orderSubmitVO);
+
+    }
+
+    @PutMapping("/payment")
+    public Result<OrderPaymentVO> payment(@RequestBody OrdersPaymentDTO ordersPaymentDTO){
+        OrderPaymentVO orderPaymentVO = orderService.payment(ordersPaymentDTO);
+        orderService.paySuccess(ordersPaymentDTO.getOrderNumber());
+        return Result.success(orderPaymentVO);
 
     }
 
@@ -56,5 +62,6 @@ public class OrderController {
         orderService.repetitionOrderById(id);
         return Result.success();
     }
+
 
 }

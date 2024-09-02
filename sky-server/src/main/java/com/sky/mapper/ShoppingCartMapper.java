@@ -4,7 +4,6 @@ import com.sky.dto.ShoppingCartDTO;
 import com.sky.entity.ShoppingCart;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 
 import java.util.List;
@@ -26,7 +25,7 @@ public interface ShoppingCartMapper {
     void deleteDishOrSetmealById(ShoppingCartDTO shoppingCartDTO);
 
     @Delete("DELETE from shopping_cart where user_id = #{userId}")
-    void cleanByUserId(Long userId);
+    void deleteByUserId(Long userId);
 
     void insertBatch(List<ShoppingCart> shoppingCartList);
 }

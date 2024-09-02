@@ -101,6 +101,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public void clean() {
         Long userId = BaseContext.getCurrentId();
-        shoppingCartMapper.cleanByUserId(userId);
+        shoppingCartMapper.deleteByUserId(userId);
     }
 }
