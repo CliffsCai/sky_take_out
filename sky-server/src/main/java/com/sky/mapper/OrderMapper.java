@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.sky.dto.OrdersDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -54,4 +53,14 @@ public interface OrderMapper {
 
     @Select("SELECT COUNT(*) from orders where status = #{status} and pay_status = #{payStatus}")
     Integer getValidTotalNumber(Integer status, Integer payStatus);
+
+    @Select("SELECT SUM(amount) from orders where status = #{status}")
+    Double getTotalCount(Integer status);
+    
+    @Select("SELECT SUM(amount) from orders where status=#{status} and order_time>= #{begin} and order_time <= #{end}")
+    Double getTotalCountByTime(Integer status, LocalDateTime begin, LocalDateTime end);
+
+
+    @Select("SELECT count(*) from orders where status = #{status} and order_time>= #{begin} and order_time <= #{end}")
+    Integer getValidTotalNumberByTime(Integer status, Integer paid, LocalDateTime begin, LocalDateTime end);
 }

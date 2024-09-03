@@ -22,4 +22,7 @@ public interface UserMapper {
     @Select("SELECT COUNT(*) from user where create_time <= #{localDateTimeEnd}")
     Integer getUserNumber(LocalDateTime localDateTimeEnd);
 
+
+    @Select("SELECT COUNT(*) from user where create_time >= #{begin} and create_time <= #{end}")
+    Integer getUserNumberByTime(LocalDateTime begin, LocalDateTime end);
 }
