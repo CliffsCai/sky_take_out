@@ -48,4 +48,10 @@ public interface OrderMapper {
 
     @Update("update orders set status = 6 , cancel_reason = '订单超时，自动取消' where pay_status = 0 and status = 1 and order_time < #{localDateTime}")
     void processTimeoutOrder(LocalDateTime localDateTime);
+
+    @Select("SELECT COUNT(*) from orders")
+    Integer getTotalNumber();
+
+    @Select("SELECT COUNT(*) from orders where status = #{status} and pay_status = #{payStatus}")
+    Integer getValidTotalNumber(Integer status, Integer payStatus);
 }
