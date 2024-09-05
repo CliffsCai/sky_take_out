@@ -56,7 +56,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
         //营业额
         Double turnover = orderMapper.getTotalCountByTime(Orders.COMPLETED, begin, end);
         turnover = turnover == null? 0.0 : turnover;
-
+        
         //有效订单数
         Integer validOrderCount = orderMapper.getValidTotalNumberByTime(Orders.COMPLETED,Orders.PAID, begin, end);
 
